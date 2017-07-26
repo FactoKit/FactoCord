@@ -1,0 +1,13 @@
+DiscordToken = "DiscordTokenHere"
+
+FactorioChannelID = "ChannelIDHere"
+
+SaveFile = "/path/to/file.zip"
+
+ServerSettings = "/path/to/file.json"
+
+Executable = "/path/to/file"
+
+AdminIDs = "AdminIDsHere,SeperateByComma"
+
+Prefix = "$"
