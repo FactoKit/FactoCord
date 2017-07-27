@@ -14,9 +14,6 @@ It acts as a bridge between a discord server and a factorio server
 For Linux:
 `./FactorioCord`
 
-For Windows:
-Double click on the exe to run it
-
 
 # Compiling
 
