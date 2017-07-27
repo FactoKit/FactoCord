@@ -2,9 +2,7 @@ DiscordToken = "DiscordTokenHere"
 
 FactorioChannelID = "ChannelIDHere"
 
-SaveFile = "/path/to/file.zip"
-
-ServerSettings = "/path/to/file.json"
+LaunchParameters = "--start-server-load-latest --server-settings /path/to/file.json"
 
 Executable = "/path/to/file"
 

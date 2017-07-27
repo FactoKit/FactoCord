@@ -45,7 +45,7 @@ func main() {
 
 	go func() {
 		defer wg.Done()
-		cmd := exec.Command(support.Config.Executable, "--start-server", support.Config.SaveFile, "--server-settings", support.Config.ServerSettingsFile)
+		cmd := exec.Command(support.Config.Executable, support.Config.LaunchParameters...)
 		cmd.Stderr = os.Stderr
 		cmd.Stdout = mwriter
 		Pipe, err = cmd.StdinPipe()

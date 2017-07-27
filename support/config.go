@@ -9,13 +9,12 @@ import (
 var Config config
 
 type config struct {
-	DiscordToken       string
-	FactorioChannelID  string
-	SaveFile           string
-	ServerSettingsFile string
-	Executable         string
-	AdminIDs           []string
-	Prefix             string
+	DiscordToken      string
+	FactorioChannelID string
+	Executable        string
+	LaunchParameters  []string
+	AdminIDs          []string
+	Prefix            string
 }
 
 func (conf *config) LoadEnv() {
@@ -25,13 +24,12 @@ func (conf *config) LoadEnv() {
 	}
 
 	Config = config{
-		DiscordToken:       os.Getenv("DiscordToken"),
-		FactorioChannelID:  os.Getenv("FactorioChannelID"),
-		SaveFile:           os.Getenv("SaveFile"),
-		ServerSettingsFile: os.Getenv("ServerSettings"),
-		Executable:         os.Getenv("Executable"),
-		AdminIDs:           strings.Split(os.Getenv("AdminIDs"), ","),
-		Prefix:             os.Getenv("Prefix"),
+		DiscordToken:      os.Getenv("DiscordToken"),
+		FactorioChannelID: os.Getenv("FactorioChannelID"),
+		LaunchParameters:  strings.Split(os.Getenv("LaunchParameters"), " "),
+		Executable:        os.Getenv("Executable"),
+		AdminIDs:          strings.Split(os.Getenv("AdminIDs"), ","),
+		Prefix:            os.Getenv("Prefix"),
 	}
 
 }
