@@ -5,7 +5,6 @@ import (
 	"os"
 
 	"github.com/FM1337/FactorioCord/support"
-
 	"github.com/bwmarrin/discordgo"
 )
 

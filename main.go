@@ -13,12 +13,9 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/fm1337/FactorioCord/commands"
-
+	"github.com/FM1337/FactorioCord/commands"
 	"github.com/FM1337/FactorioCord/commands/admin"
-
 	"github.com/FM1337/FactorioCord/support"
-
 	"github.com/bwmarrin/discordgo"
 	_ "github.com/joho/godotenv/autoload"
 )

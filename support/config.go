@@ -15,6 +15,7 @@ type config struct {
 	LaunchParameters  []string
 	AdminIDs          []string
 	Prefix            string
+	ModListLocation   string
 }
 
 func (conf *config) LoadEnv() {
@@ -30,6 +31,7 @@ func (conf *config) LoadEnv() {
 		Executable:        os.Getenv("Executable"),
 		AdminIDs:          strings.Split(os.Getenv("AdminIDs"), ","),
 		Prefix:            os.Getenv("Prefix"),
+		ModListLocation:   os.Getenv("ModListLocation"),
 	}
 
 }

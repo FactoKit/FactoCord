@@ -3,10 +3,9 @@ package commands
 import (
 	"strings"
 
-	"github.com/FM1337/FactorioCord/support"
-
 	"github.com/FM1337/FactorioCord/commands/admin"
-
+	"github.com/FM1337/FactorioCord/commands/utils"
+	"github.com/FM1337/FactorioCord/support"
 	"github.com/bwmarrin/discordgo"
 )
 
@@ -26,6 +25,8 @@ var CL Commands
 func RegisterCommands() {
 	CL.CommandList = append(CL.CommandList, Command{Name: "Stop", Command: admin.StopServer,
 		Admin: true})
+	CL.CommandList = append(CL.CommandList, Command{Name: "Mods", Command: utils.ModsList,
+		Admin: false})
 }
 
 // run a command
@@ -35,6 +36,11 @@ func RunCommand(name string, s *discordgo.Session, m *discordgo.MessageCreate) {
 			if command.Admin && CheckAdmin(m.Author.ID) {
 				command.Command(s, m)
 			}
+
+			if !command.Admin {
+				command.Command(s, m)
+			}
+
 			return
 		}
 	}

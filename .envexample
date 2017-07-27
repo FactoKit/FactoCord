@@ -9,3 +9,5 @@ Executable = "/path/to/file"
 AdminIDs = "AdminIDsHere,SeperateByComma"
 
 Prefix = "$"
+
+ModListLocation = "/path/to/mods/mod-list.json"
