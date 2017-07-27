@@ -14,6 +14,7 @@ import (
 	"strings"
 	"sync"
 	"syscall"
+	"time"
 
 	"github.com/bwmarrin/discordgo"
 	_ "github.com/joho/godotenv/autoload"
@@ -21,6 +22,7 @@ import (
 
 var Running bool
 var Pipe io.WriteCloser
+var Session *discordgo.Session
 
 func main() {
 	support.Config.LoadEnv()
@@ -70,6 +72,17 @@ func main() {
 			io.WriteString(Pipe, fmt.Sprintf("%s\n", line))
 		}
 	}()
+
+	go func() {
+		// Wait 10 seconds on start up before continuing
+		time.Sleep(10 * time.Second)
+
+		for true == true {
+			support.CacheDiscordMembers(Session)
+			//sleep for 4 hours (caches every 4 hours)
+			time.Sleep(4 * time.Hour)
+		}
+	}()
 	Discord()
 }
 
@@ -80,7 +93,7 @@ func Discord() {
 	admin.P = &Pipe
 	fmt.Println("Starting bot..")
 	bot, err := discordgo.New("Bot " + discordToken)
-
+	Session = bot
 	if err != nil {
 		fmt.Println("Error creating Discord session: ", err)
 		return
@@ -95,6 +108,7 @@ func Discord() {
 
 	bot.AddHandler(messageCreate)
 	bot.AddHandlerOnce(support.Chat)
+	time.Sleep(3 * time.Second)
 	bot.ChannelMessageSend(support.Config.FactorioChannelID, "The server has started!")
 	fmt.Println("Bot is now running.  Press CTRL-C to exit.")
 	sc := make(chan os.Signal, 1)

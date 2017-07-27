@@ -29,6 +29,20 @@ func Chat(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 						TmpList := strings.Split(line.Text, " ")
 						TmpList[3] = strings.Replace(TmpList[3], ":", "", -1)
+						if strings.Contains(strings.Join(TmpList, " "), "@") {
+							index := LocateMentionPosition(TmpList)
+
+							for _, position := range index {
+								User := SearchForUser(TmpList[position])
+
+								if User == nil {
+									continue
+								}
+								TmpList[position] = User.Mention()
+							}
+
+						}
+
 						s.ChannelMessageSend(Config.FactorioChannelID, fmt.Sprintf("<%s>: %s", TmpList[3], strings.Join(TmpList[4:], " ")))
 					}
 				}
