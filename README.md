@@ -12,7 +12,7 @@ It acts as a bridge between a discord server and a factorio server
 *Make sure you have your .env file in the same directory as the executable/binary, you can use .envexample the template*
 
 For Linux:
-`./FactorioCore`
+`./FactorioCord`
 
 For Windows:
 Double click on the exe to run it
