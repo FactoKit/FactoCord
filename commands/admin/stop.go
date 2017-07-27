@@ -1,9 +1,10 @@
 package admin
 
 import (
-	"FactorioCord/support"
 	"io"
 	"os"
+
+	"github.com/FM1337/FactorioCord/support"
 
 	"github.com/bwmarrin/discordgo"
 )

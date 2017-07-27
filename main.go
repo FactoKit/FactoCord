@@ -1,9 +1,6 @@
 package main
 
 import (
-	"FactorioCord/commands"
-	"FactorioCord/commands/admin"
-	"FactorioCord/support"
 	"bufio"
 	"fmt"
 	"io"
@@ -16,6 +13,12 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/fm1337/FactorioCord/commands"
+
+	"github.com/FM1337/FactorioCord/commands/admin"
+
+	"github.com/FM1337/FactorioCord/support"
+
 	"github.com/bwmarrin/discordgo"
 	_ "github.com/joho/godotenv/autoload"
 )
@@ -27,9 +30,8 @@ var Session *discordgo.Session
 func main() {
 	support.Config.LoadEnv()
 	Running = false
-	err := os.Remove("factorio.log")
 
-	if err != nil {
+	if err := os.Remove("factorio.log"); err != nil {
 		log.Println(err)
 	}
 
@@ -64,7 +66,7 @@ func main() {
 
 	go func() {
 		Console := bufio.NewReader(os.Stdin)
-		for true == true {
+		for {
 			line, _, err := Console.ReadLine()
 			if err != nil {
 				log.Fatal(err)
@@ -77,7 +79,7 @@ func main() {
 		// Wait 10 seconds on start up before continuing
 		time.Sleep(10 * time.Second)
 
-		for true == true {
+		for {
 			support.CacheDiscordMembers(Session)
 			//sleep for 4 hours (caches every 4 hours)
 			time.Sleep(4 * time.Hour)

@@ -1,9 +1,11 @@
 package commands
 
 import (
-	"FactorioCord/commands/admin"
-	"FactorioCord/support"
 	"strings"
+
+	"github.com/FM1337/FactorioCord/support"
+
+	"github.com/FM1337/FactorioCord/commands/admin"
 
 	"github.com/bwmarrin/discordgo"
 )

@@ -11,7 +11,7 @@ import (
 )
 
 func Chat(s *discordgo.Session, m *discordgo.MessageCreate) {
-	for true == true {
+	for {
 		t, err := tail.TailFile("factorio.log", tail.Config{Follow: true})
 		if err != nil {
 			log.Fatal(err)

@@ -19,7 +19,7 @@ type config struct {
 
 func (conf *config) LoadEnv() {
 	if _, err := os.Stat(".env"); os.IsNotExist(err) {
-		fmt.Println("Enviroment file not found, cannot continue!")
+		fmt.Println("Environment file not found, cannot continue!")
 		os.Exit(1)
 	}
 
