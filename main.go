@@ -4,6 +4,7 @@ import (
 	"FactorioCord/commands"
 	"FactorioCord/commands/admin"
 	"FactorioCord/support"
+	"bufio"
 	"fmt"
 	"io"
 	"log"
@@ -57,6 +58,17 @@ func main() {
 			log.Fatal(err)
 		}
 
+	}()
+
+	go func() {
+		Console := bufio.NewReader(os.Stdin)
+		for true == true {
+			line, _, err := Console.ReadLine()
+			if err != nil {
+				log.Fatal(err)
+			}
+			io.WriteString(Pipe, fmt.Sprintf("%s\n", line))
+		}
 	}()
 	Discord()
 }

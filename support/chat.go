@@ -18,7 +18,7 @@ func Chat(s *discordgo.Session, m *discordgo.MessageCreate) {
 		}
 		for line := range t.Lines {
 			if strings.Contains(line.Text, "[CHAT]") || strings.Contains(line.Text, "[JOIN]") || strings.Contains(line.Text, "[LEAVE]") {
-				if !strings.Contains(line.Text, "[Discord]") {
+				if !strings.Contains(line.Text, "<server>") {
 
 					if strings.Contains(line.Text, "[JOIN]") ||
 						strings.Contains(line.Text, "[LEAVE]") {
