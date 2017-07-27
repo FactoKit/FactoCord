@@ -24,3 +24,4 @@ This application uses several packages that'll need to be installed for you to c
 
 - [DiscordGo](https://github.com/bwmarrin/discordgo)
 - [godotenv](https://github.com/joho/godotenv/)
+- [tails](https://github.com/hpcloud/tail)
