@@ -1,4 +1,5 @@
 ﻿# FactoCord
+[![Go Report Card](https://goreportcard.com/badge/github.com/FactoKit/FactoCord)](https://goreportcard.com/report/github.com/FactoKit/FactoCord)
 
 This is a Factorio Discord bot.
 
