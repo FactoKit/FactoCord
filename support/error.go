@@ -14,7 +14,7 @@ func ErrorLog(err error) {
 	}
 	defer errorlog.Close()
 	errorlog.WriteString(fmt.Sprintf("%s\n", err))
-	fmt.Println("Opps, it looks like an error happended!")
+	fmt.Println("Opps, it looks like an error happened!")
 	fmt.Println("Please post your error.log on https://github.com/FactoKit/FactoCord/issues")
 	Exit(1)
 }
