@@ -6,7 +6,7 @@ import (
 	"github.com/bwmarrin/discordgo"
 )
 
-// Searches for the user to be mentioned
+// SearchForUser searches for the user to be mentioned.
 func SearchForUser(name string) *discordgo.User {
 	name = strings.Replace(name, "@", "", -1)
 	for _, user := range Users {
@@ -18,7 +18,7 @@ func SearchForUser(name string) *discordgo.User {
 	return nil
 }
 
-// Locates the position in a string list for the discord mention
+// LocateMentionPosition locates the position in a string list for the discord mention.
 func LocateMentionPosition(List []string) []int {
 	positionlist := []int{}
 	for i, String := range List {

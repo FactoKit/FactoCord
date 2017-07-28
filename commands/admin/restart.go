@@ -8,10 +8,13 @@ import (
 	"github.com/bwmarrin/discordgo"
 )
 
+// R is a reference to the running boolean in main.
 var R *bool
+
+// RestartCount is the number of times the server has restarted.
 var RestartCount int
 
-// Saves and restarts the server
+// Restart saves and restarts the server
 func Restart(s *discordgo.Session, m *discordgo.MessageCreate) {
 	if *R == false {
 		s.ChannelMessageSend(support.Config.FactorioChannelID, "Server is not running!")

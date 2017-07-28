@@ -7,6 +7,7 @@ import (
 	"strings"
 )
 
+// Config is a config interface.
 var Config config
 
 type config struct {

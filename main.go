@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"errors"
 	"fmt"
 	"io"
 	"log"
@@ -21,10 +20,14 @@ import (
 	_ "github.com/joho/godotenv/autoload"
 )
 
+// Running is the boolean that tells if the server is running or not
 var Running bool
+
+// Pipe is an WriteCloser interface
 var Pipe io.WriteCloser
+
+// Session is a discordgo session
 var Session *discordgo.Session
-var Bot *discordgo.Session
 
 func main() {
 	support.Config.LoadEnv()
@@ -39,7 +42,7 @@ func main() {
 	logging, err := os.OpenFile("factorio.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 
 	if err != nil {
-		support.ErrorLog(errors.New(fmt.Sprintf("%s: An error occurred when attempting to open factorio.log\nDetails: %s", time.Now(), err)))
+		support.ErrorLog(fmt.Errorf("%s: An error occurred when attempting to open factorio.log\nDetails: %s", time.Now(), err))
 	}
 
 	mwriter := io.MultiWriter(logging, os.Stdout)
@@ -58,17 +61,17 @@ func main() {
 				Pipe, err = cmd.StdinPipe()
 
 				if err != nil {
-					support.ErrorLog(errors.New(fmt.Sprintf("%s: An error occurred when attempting to execute cmd.StdinPipe()\nDetails: %s", time.Now(), err)))
+					support.ErrorLog(fmt.Errorf("%s: An error occurred when attempting to execute cmd.StdinPipe()\nDetails: %s", time.Now(), err))
 				}
 
 				err := cmd.Start()
 
 				if err != nil {
-					support.ErrorLog(errors.New(fmt.Sprintf("%s: An error occurred when attempting to start the server\nDetails: %s", time.Now(), err)))
+					support.ErrorLog(fmt.Errorf("%s: An error occurred when attempting to start the server\nDetails: %s", time.Now(), err))
 				}
 				if admin.RestartCount > 0 {
 					time.Sleep(3 * time.Second)
-					Bot.ChannelMessageSend(support.Config.FactorioChannelID,
+					Session.ChannelMessageSend(support.Config.FactorioChannelID,
 						"Server restarted successfully!")
 				}
 			}
@@ -81,7 +84,7 @@ func main() {
 		for {
 			line, _, err := Console.ReadLine()
 			if err != nil {
-				support.ErrorLog(errors.New(fmt.Sprintf("%s: An error occurred when attempting to pass input to the console\nDetails: %s", time.Now(), err)))
+				support.ErrorLog(fmt.Errorf("%s: An error occurred when attempting to pass input to the console\nDetails: %s", time.Now(), err))
 			}
 			io.WriteString(Pipe, fmt.Sprintf("%s\n", line))
 		}
@@ -97,10 +100,10 @@ func main() {
 			time.Sleep(4 * time.Hour)
 		}
 	}()
-	Discord()
+	discord()
 }
 
-func Discord() {
+func discord() {
 	// No hard coding the token }:<
 	discordToken := support.Config.DiscordToken
 	commands.RegisterCommands()
@@ -110,7 +113,7 @@ func Discord() {
 	Session = bot
 	if err != nil {
 		fmt.Println("Error creating Discord session: ", err)
-		support.ErrorLog(errors.New(fmt.Sprintf("%s: An error occurred when attempting to create the Discord session\nDetails: %s", time.Now(), err)))
+		support.ErrorLog(fmt.Errorf("%s: An error occurred when attempting to create the Discord session\nDetails: %s", time.Now(), err))
 		return
 	}
 
@@ -118,7 +121,7 @@ func Discord() {
 
 	if err != nil {
 		fmt.Println("error opening connection,", err)
-		support.ErrorLog(errors.New(fmt.Sprintf("%s: An error occurred when attempting to connect to Discord\nDetails: %s", time.Now(), err)))
+		support.ErrorLog(fmt.Errorf("%s: An error occurred when attempting to connect to Discord\nDetails: %s", time.Now(), err))
 		return
 	}
 
@@ -126,7 +129,6 @@ func Discord() {
 	bot.AddHandlerOnce(support.Chat)
 	time.Sleep(3 * time.Second)
 	bot.ChannelMessageSend(support.Config.FactorioChannelID, "The server has started!")
-	Bot = bot
 	fmt.Println("Bot is now running.  Press CTRL-C to exit.")
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
@@ -149,10 +151,9 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 			name := strings.ToLower(command[0])
 			commands.RunCommand(name, s, m)
 			return
-		} else {
-			// Pipes normal chat allowing it to be seen ingame
-			io.WriteString(Pipe, fmt.Sprintf("[Discord] <%s>: %s\r\n", m.Author.Username, m.ContentWithMentionsReplaced()))
-			return
 		}
+		// Pipes normal chat allowing it to be seen ingame
+		io.WriteString(Pipe, fmt.Sprintf("[Discord] <%s>: %s\r\n", m.Author.Username, m.ContentWithMentionsReplaced()))
+		return
 	}
 }

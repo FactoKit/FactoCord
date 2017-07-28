@@ -1,7 +1,6 @@
 package support
 
 import (
-	"errors"
 	"fmt"
 	"strings"
 	"time"
@@ -10,11 +9,12 @@ import (
 	"github.com/hpcloud/tail"
 )
 
+// Chat pipes in-game chat to Discord.
 func Chat(s *discordgo.Session, m *discordgo.MessageCreate) {
 	for {
 		t, err := tail.TailFile("factorio.log", tail.Config{Follow: true})
 		if err != nil {
-			ErrorLog(errors.New(fmt.Sprintf("%s: An error occurred when attempting to tail factorio.log\nDetails: %s", time.Now(), err)))
+			ErrorLog(fmt.Errorf("%s: An error occurred when attempting to tail factorio.log\nDetails: %s", time.Now(), err))
 		}
 		for line := range t.Lines {
 			if strings.Contains(line.Text, "[CHAT]") || strings.Contains(line.Text, "[JOIN]") || strings.Contains(line.Text, "[LEAVE]") {

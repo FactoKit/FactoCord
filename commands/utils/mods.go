@@ -9,16 +9,18 @@ import (
 	"github.com/bwmarrin/discordgo"
 )
 
+// ModJson is struct containing a slice of Mod.
 type ModJson struct {
 	Mods []Mod
 }
 
+// Mod is a struct containing info about a mod.
 type Mod struct {
 	Name    string
 	Enabled bool
 }
 
-func ModListEmbed(ModList *ModJson) *discordgo.MessageEmbed {
+func modListEmbed(ModList *ModJson) *discordgo.MessageEmbed {
 	fields := []*discordgo.MessageEmbedField{}
 	var enabled, disabled int
 	var S = "mod"
@@ -54,6 +56,7 @@ func ModListEmbed(ModList *ModJson) *discordgo.MessageEmbed {
 
 }
 
+// ModsList returns the list of mods running on the server.
 func ModsList(s *discordgo.Session, m *discordgo.MessageCreate) {
 	ModList := &ModJson{}
 	Json, err := ioutil.ReadFile(support.Config.ModListLocation)
@@ -70,7 +73,7 @@ func ModsList(s *discordgo.Session, m *discordgo.MessageCreate) {
 			fmt.Sprintf("Sorry, there was an error reading your mods list. Error details: %s", err))
 		return
 	}
-	_, err = s.ChannelMessageSendEmbed(support.Config.FactorioChannelID, ModListEmbed(ModList))
+	_, err = s.ChannelMessageSendEmbed(support.Config.FactorioChannelID, modListEmbed(ModList))
 	if err != nil {
 		s.ChannelMessageSend(support.Config.FactorioChannelID, fmt.Sprintf("Sorry, there was an error with the discord embed message Error details: %s", err))
 	}

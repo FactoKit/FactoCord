@@ -7,9 +7,10 @@ import (
 	"github.com/bwmarrin/discordgo"
 )
 
+// P references the var Pipe in main
 var P *io.WriteCloser
 
-// Saves and stops the server
+// StopServer saves and stops the server.
 func StopServer(s *discordgo.Session, m *discordgo.MessageCreate) {
 	io.WriteString(*P, "/save\n")
 	io.WriteString(*P, "/quit\n")

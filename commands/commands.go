@@ -9,19 +9,22 @@ import (
 	"github.com/bwmarrin/discordgo"
 )
 
+// Commands is a struct containing a slice of Command.
 type Commands struct {
 	CommandList []Command
 }
 
+// Command is a struct containing fields that hold command information.
 type Command struct {
 	Name    string
 	Command func(s *discordgo.Session, m *discordgo.MessageCreate)
 	Admin   bool
 }
 
+// CL is a Commands interface.
 var CL Commands
 
-// register commands on startup
+// RegisterCommands registers the commands on start up.
 func RegisterCommands() {
 	// Admin Commands
 	CL.CommandList = append(CL.CommandList, Command{Name: "Stop", Command: admin.StopServer,
@@ -36,7 +39,7 @@ func RegisterCommands() {
 		Admin: false})
 }
 
-// run a command
+// RunCommand runs a specified command.
 func RunCommand(name string, s *discordgo.Session, m *discordgo.MessageCreate) {
 	for _, command := range CL.CommandList {
 		if strings.ToLower(command.Name) == strings.ToLower(name) {
@@ -53,7 +56,7 @@ func RunCommand(name string, s *discordgo.Session, m *discordgo.MessageCreate) {
 	}
 }
 
-// Check if the user attempting to run an admin command is an admin
+// CheckAdmin checks if the user attempting to run an admin command is an admin
 func CheckAdmin(ID string) bool {
 	for _, admin := range support.Config.AdminIDs {
 		if ID == admin {
