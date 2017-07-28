@@ -1,4 +1,4 @@
-﻿# FactorioCord
+﻿# FactoCord
 
 This is a Factorio Discord bot.
 
@@ -12,7 +12,7 @@ It acts as a bridge between a discord server and a factorio server
 *Make sure you have your .env file in the same directory as the executable/binary, you can use .envexample the template*
 
 For Linux:
-`./FactorioCord`
+`./FactoCord`
 
 
 # Compiling
