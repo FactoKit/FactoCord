@@ -1,6 +1,7 @@
 package support
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"strings"
@@ -21,7 +22,8 @@ type config struct {
 func (conf *config) LoadEnv() {
 	if _, err := os.Stat(".env"); os.IsNotExist(err) {
 		fmt.Println("Environment file not found, cannot continue!")
-		os.Exit(1)
+		Error := errors.New("Failed to load environment file")
+		ErrorLog(Error)
 	}
 
 	Config = config{

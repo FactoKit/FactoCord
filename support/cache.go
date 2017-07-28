@@ -1,7 +1,9 @@
 package support
 
 import (
-	"log"
+	"errors"
+	"fmt"
+	"time"
 
 	"github.com/bwmarrin/discordgo"
 )
@@ -21,12 +23,12 @@ func CacheDiscordMembers(s *discordgo.Session) {
 
 	GuildChannel, err := s.Channel(Config.FactorioChannelID)
 	if err != nil {
-		log.Fatal(err)
+		ErrorLog(errors.New(fmt.Sprintf("%s: An error occured when attempting to read the Discord Guild\nDetails: %s", time.Now(), err)))
 	}
 	GuildID := GuildChannel.GuildID
 	members, err := s.State.Guild(GuildID)
 	if err != nil {
-		log.Fatal(err)
+		ErrorLog(errors.New(fmt.Sprintf("%s: An error occured when attempting to read the Discord Guild Members\nDetails: %s", time.Now(), err)))
 	}
 	for _, member := range members.Members {
 		Users = append(Users, UserList{UserID: member.User.ID, Nick: member.Nick,

@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"io"
 	"log"
@@ -30,14 +31,15 @@ func main() {
 	Running = false
 	admin.R = &Running
 
+	// Do not exit the app on this error.
 	if err := os.Remove("factorio.log"); err != nil {
-		log.Println(err)
+		fmt.Println("Factorio.log doesn't exist, continuing anyway")
 	}
 
 	logging, err := os.OpenFile("factorio.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 
 	if err != nil {
-		log.Fatal(err)
+		support.ErrorLog(errors.New(fmt.Sprintf("%s: An error occured when attempting to open factorio.log\nDetails: %s", time.Now(), err)))
 	}
 
 	mwriter := io.MultiWriter(logging, os.Stdout)
@@ -56,13 +58,13 @@ func main() {
 				Pipe, err = cmd.StdinPipe()
 
 				if err != nil {
-					log.Fatal(err)
+					support.ErrorLog(errors.New(fmt.Sprintf("%s: An error occured when attempting to execute cmd.StdinPipe()\nDetails: %s", time.Now(), err)))
 				}
 
 				err := cmd.Start()
 
 				if err != nil {
-					log.Fatal(err)
+					support.ErrorLog(errors.New(fmt.Sprintf("%s: An error occured when attempting to start the server\nDetails: %s", time.Now(), err)))
 				}
 				if admin.RestartCount > 0 {
 					time.Sleep(3 * time.Second)
@@ -79,7 +81,7 @@ func main() {
 		for {
 			line, _, err := Console.ReadLine()
 			if err != nil {
-				log.Fatal(err)
+				support.ErrorLog(errors.New(fmt.Sprintf("%s: An error occured when attempting to pass input to the console\nDetails: %s", time.Now(), err)))
 			}
 			io.WriteString(Pipe, fmt.Sprintf("%s\n", line))
 		}
@@ -108,6 +110,7 @@ func Discord() {
 	Session = bot
 	if err != nil {
 		fmt.Println("Error creating Discord session: ", err)
+		support.ErrorLog(errors.New(fmt.Sprintf("%s: An error occured when attempting to create the Discord session\nDetails: %s", time.Now(), err)))
 		return
 	}
 
@@ -115,6 +118,7 @@ func Discord() {
 
 	if err != nil {
 		fmt.Println("error opening connection,", err)
+		support.ErrorLog(errors.New(fmt.Sprintf("%s: An error occured when attempting to connect to Discord\nDetails: %s", time.Now(), err)))
 		return
 	}
 

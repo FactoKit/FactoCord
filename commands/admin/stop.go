@@ -2,7 +2,6 @@ package admin
 
 import (
 	"io"
-	"os"
 
 	"github.com/FactoKit/FactoCord/support"
 	"github.com/bwmarrin/discordgo"
@@ -16,5 +15,5 @@ func StopServer(s *discordgo.Session, m *discordgo.MessageCreate) {
 	io.WriteString(*P, "/quit\n")
 	s.ChannelMessageSend(support.Config.FactorioChannelID, "Server saved and shutting down; Cya!")
 	s.Close()
-	os.Exit(1)
+	support.Exit(0)
 }

@@ -57,20 +57,22 @@ func ModListEmbed(ModList *ModJson) *discordgo.MessageEmbed {
 func ModsList(s *discordgo.Session, m *discordgo.MessageCreate) {
 	ModList := &ModJson{}
 	Json, err := ioutil.ReadFile(support.Config.ModListLocation)
-
+	// Don't exit on this error, just sent message to the channel!
 	if err != nil {
-		s.ChannelMessageSend(support.Config.FactorioChannelID, "Error reading mod list, did you specify it in .env?")
+		s.ChannelMessageSend(support.Config.FactorioChannelID,
+			fmt.Sprintf("Sorry, there was an error reading your mods list, did you specify it in the .env file? Error details: %s", err))
 		return
 	}
 
 	err = json.Unmarshal(Json, &ModList)
 	if err != nil {
-		s.ChannelMessageSend(support.Config.FactorioChannelID, fmt.Sprintf("%s", err))
+		s.ChannelMessageSend(support.Config.FactorioChannelID,
+			fmt.Sprintf("Sorry, there was an error reading your mods list. Error details: %s", err))
 		return
 	}
 	_, err = s.ChannelMessageSendEmbed(support.Config.FactorioChannelID, ModListEmbed(ModList))
 	if err != nil {
-		s.ChannelMessageSend(support.Config.FactorioChannelID, fmt.Sprintf("%s", err))
+		s.ChannelMessageSend(support.Config.FactorioChannelID, fmt.Sprintf("Sorry, there was an error with the discord embed message Error details: %s", err))
 	}
 	return
 }

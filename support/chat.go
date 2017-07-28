@@ -1,8 +1,8 @@
 package support
 
 import (
+	"errors"
 	"fmt"
-	"log"
 	"strings"
 	"time"
 
@@ -14,7 +14,7 @@ func Chat(s *discordgo.Session, m *discordgo.MessageCreate) {
 	for {
 		t, err := tail.TailFile("factorio.log", tail.Config{Follow: true})
 		if err != nil {
-			log.Fatal(err)
+			ErrorLog(errors.New(fmt.Sprintf("%s: An error occured when attempting to tail factorio.log\nDetails: %s", time.Now(), err)))
 		}
 		for line := range t.Lines {
 			if strings.Contains(line.Text, "[CHAT]") || strings.Contains(line.Text, "[JOIN]") || strings.Contains(line.Text, "[LEAVE]") {
