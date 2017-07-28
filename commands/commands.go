@@ -3,9 +3,9 @@ package commands
 import (
 	"strings"
 
-	"github.com/FM1337/FactorioCord/commands/admin"
-	"github.com/FM1337/FactorioCord/commands/utils"
-	"github.com/FM1337/FactorioCord/support"
+	"github.com/FactoKit/FactorioCord/commands/admin"
+	"github.com/FactoKit/FactorioCord/commands/utils"
+	"github.com/FactoKit/FactorioCord/support"
 	"github.com/bwmarrin/discordgo"
 )
 
