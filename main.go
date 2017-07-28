@@ -47,7 +47,7 @@ func main() {
 	go func() {
 		defer wg.Done()
 		for {
-			// If the progress is already running DO NOT RUN IT AGAIN
+			// If the process is already running DO NOT RUN IT AGAIN
 			if !Running {
 				Running = true
 				cmd := exec.Command(support.Config.Executable, support.Config.LaunchParameters...)
