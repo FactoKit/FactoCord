@@ -23,10 +23,12 @@ import (
 var Running bool
 var Pipe io.WriteCloser
 var Session *discordgo.Session
+var Bot *discordgo.Session
 
 func main() {
 	support.Config.LoadEnv()
 	Running = false
+	admin.R = &Running
 
 	if err := os.Remove("factorio.log"); err != nil {
 		log.Println(err)
@@ -44,21 +46,32 @@ func main() {
 
 	go func() {
 		defer wg.Done()
-		cmd := exec.Command(support.Config.Executable, support.Config.LaunchParameters...)
-		cmd.Stderr = os.Stderr
-		cmd.Stdout = mwriter
-		Pipe, err = cmd.StdinPipe()
+		for {
+			// If the progress is already running DO NOT RUN IT AGAIN
+			if !Running {
+				Running = true
+				cmd := exec.Command(support.Config.Executable, support.Config.LaunchParameters...)
+				cmd.Stderr = os.Stderr
+				cmd.Stdout = mwriter
+				Pipe, err = cmd.StdinPipe()
 
-		if err != nil {
-			log.Fatal(err)
+				if err != nil {
+					log.Fatal(err)
+				}
+
+				err := cmd.Start()
+
+				if err != nil {
+					log.Fatal(err)
+				}
+				if admin.RestartCount > 0 {
+					time.Sleep(3 * time.Second)
+					Bot.ChannelMessageSend(support.Config.FactorioChannelID,
+						"Server restarted successfully!")
+				}
+			}
+			time.Sleep(5 * time.Second)
 		}
-
-		err := cmd.Start()
-
-		if err != nil {
-			log.Fatal(err)
-		}
-
 	}()
 
 	go func() {
@@ -109,6 +122,7 @@ func Discord() {
 	bot.AddHandlerOnce(support.Chat)
 	time.Sleep(3 * time.Second)
 	bot.ChannelMessageSend(support.Config.FactorioChannelID, "The server has started!")
+	Bot = bot
 	fmt.Println("Bot is now running.  Press CTRL-C to exit.")
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
