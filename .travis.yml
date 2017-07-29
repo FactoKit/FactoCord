@@ -1,0 +1,12 @@
+language: go
+go:
+- 1.7
+- 1.8
+- tip
+before_install:
+- go get -v github.com/bwmarrin/discordgo
+- go get -v github.com/joho/godotenv/
+- go get -v github.com/hpcloud/tail
+branches:
+  only:
+  - master
