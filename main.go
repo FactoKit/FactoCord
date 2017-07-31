@@ -47,7 +47,7 @@ func main() {
 
 	mwriter := io.MultiWriter(logging, os.Stdout)
 	var wg sync.WaitGroup
-	wg.Add(1)
+	wg.Add(3)
 
 	go func() {
 		defer wg.Done()
@@ -59,7 +59,6 @@ func main() {
 				cmd.Stderr = os.Stderr
 				cmd.Stdout = mwriter
 				Pipe, err = cmd.StdinPipe()
-
 				if err != nil {
 					support.ErrorLog(fmt.Errorf("%s: An error occurred when attempting to execute cmd.StdinPipe()\nDetails: %s", time.Now(), err))
 				}
@@ -84,9 +83,12 @@ func main() {
 		for {
 			line, _, err := Console.ReadLine()
 			if err != nil {
+				support.ErrorLog(fmt.Errorf("%s: An error occurred when attempting to read the input to pass as input to the console\nDetails: %s", time.Now(), err))
+			}
+			_, err = io.WriteString(Pipe, fmt.Sprintf("%s\n", line))
+			if err != nil {
 				support.ErrorLog(fmt.Errorf("%s: An error occurred when attempting to pass input to the console\nDetails: %s", time.Now(), err))
 			}
-			io.WriteString(Pipe, fmt.Sprintf("%s\n", line))
 		}
 	}()
 
@@ -153,7 +155,10 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 			return
 		}
 		// Pipes normal chat allowing it to be seen ingame
-		io.WriteString(Pipe, fmt.Sprintf("[Discord] <%s>: %s\r\n", m.Author.Username, m.ContentWithMentionsReplaced()))
+		_, err := io.WriteString(Pipe, fmt.Sprintf("[Discord] <%s>: %s\r\n", m.Author.Username, m.ContentWithMentionsReplaced()))
+		if err != nil {
+			support.ErrorLog(fmt.Errorf("%s: An error occurred when attempting to pass Discord chat to in-game\nDetails: %s", time.Now(), err))
+		}
 		return
 	}
 }
