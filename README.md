@@ -33,6 +33,12 @@ FactoCord uses the following packages:
 - [godotenv](https://github.com/joho/godotenv/)
 - [tails](https://github.com/hpcloud/tail)
 
+You will need to add these lib as go get:
+
+- `go get github.com/bwmarrin/discordgo`
+- `go get github.com/joho/godotenv`
+- `go get github.com/hpcloud/tail/...`
+
 To compile just do `go build`
 
 
