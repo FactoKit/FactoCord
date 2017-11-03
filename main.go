@@ -13,9 +13,9 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/FactoKit/FactoCord/commands"
-	"github.com/FactoKit/FactoCord/commands/admin"
-	"github.com/FactoKit/FactoCord/support"
+	"./support"
+	"./commands"
+	"./commands/admin"
 	"github.com/bwmarrin/discordgo"
 	_ "github.com/joho/godotenv/autoload"
 )
@@ -113,6 +113,7 @@ func discord() {
 	fmt.Println("Starting bot..")
 	bot, err := discordgo.New("Bot " + discordToken)
 	Session = bot
+	bot.UpdateStatus(1, support.Config.GameName)
 	if err != nil {
 		fmt.Println("Error creating Discord session: ", err)
 		support.ErrorLog(fmt.Errorf("%s: An error occurred when attempting to create the Discord session\nDetails: %s", time.Now(), err))

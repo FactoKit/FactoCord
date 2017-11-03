@@ -18,6 +18,7 @@ type config struct {
 	AdminIDs          []string
 	Prefix            string
 	ModListLocation   string
+	GameName          string
 }
 
 func (conf *config) LoadEnv() {
