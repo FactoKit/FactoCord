@@ -36,6 +36,7 @@ func (conf *config) LoadEnv() {
 		AdminIDs:          strings.Split(os.Getenv("AdminIDs"), ","),
 		Prefix:            os.Getenv("Prefix"),
 		ModListLocation:   os.Getenv("ModListLocation"),
+		GameName:          os.Getenv("GameName"),
 	}
 
 }
