@@ -13,9 +13,9 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/FactoKit/FactoCord/commands"
-	"github.com/FactoKit/FactoCord/commands/admin"
-	"github.com/FactoKit/FactoCord/support"
+	"./support"
+	"./commands"
+	"./commands/admin"
 	"github.com/bwmarrin/discordgo"
 	_ "github.com/joho/godotenv/autoload"
 )
@@ -131,6 +131,7 @@ func discord() {
 	bot.AddHandlerOnce(support.Chat)
 	time.Sleep(3 * time.Second)
 	bot.ChannelMessageSend(support.Config.FactorioChannelID, "The server has started!")
+	bot.UpdateStatus(0, support.Config.GameName)
 	fmt.Println("Bot is now running.  Press CTRL-C to exit.")
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)

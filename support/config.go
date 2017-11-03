@@ -18,6 +18,7 @@ type config struct {
 	AdminIDs          []string
 	Prefix            string
 	ModListLocation   string
+	GameName          string
 }
 
 func (conf *config) LoadEnv() {
@@ -35,6 +36,7 @@ func (conf *config) LoadEnv() {
 		AdminIDs:          strings.Split(os.Getenv("AdminIDs"), ","),
 		Prefix:            os.Getenv("Prefix"),
 		ModListLocation:   os.Getenv("ModListLocation"),
+		GameName:          os.Getenv("GameName"),
 	}
 
 }
