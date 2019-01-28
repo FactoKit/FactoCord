@@ -142,11 +142,12 @@ func discord() {
 }
 
 func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
-	log.Print("[" + m.Author.Username + "] " + m.Content)
 
 	if m.Author.ID == s.State.User.ID {
 		return
 	}
+	
+	log.Print("[" + m.Author.Username + "] " + m.Content)
 
 	if m.ChannelID == support.Config.FactorioChannelID {
 		if strings.HasPrefix(m.Content, support.Config.Prefix) {
@@ -156,10 +157,40 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 			return
 		}
 		// Pipes normal chat allowing it to be seen ingame
-		_, err := io.WriteString(Pipe, fmt.Sprintf("[Discord] <%s>: %s\r\n", m.Author.Username, m.ContentWithMentionsReplaced()))
+		_, err := io.WriteString(Pipe, fmt.Sprintf("[Discord] <%s>: %s\r\n", m.Author.Username, strings.Replace(m.ContentWithMentionsReplaced(), "\n"," NL ",-1)))
 		if err != nil {
 			support.ErrorLog(fmt.Errorf("%s: An error occurred when attempting to pass Discord chat to in-game\nDetails: %s", time.Now(), err))
 		}
 		return
 	}
+	
+	if m.ChannelID == support.Config.FactorioConsoleChatID {
+		fmt.Println("wrote to console from channel: \"", fmt.Sprintf("%s", m.Content), "\"")
+		s.ChannelMessageSend(support.Config.FactorioConsoleChatID, fmt.Sprintf("wrote %s", m.Content))
+		_, err := io.WriteString(Pipe, fmt.Sprintf("%s\n", m.Content))
+		if err != nil {
+			support.ErrorLog(fmt.Errorf("%s: An error occurred when attempting to pass Discord console to in-game\nDetails: %s", time.Now(), err))
+		}
+	}
+	return
 }
+
+func CheckAdmin(ID string) bool {
+	for _, admin := range support.Config.AdminIDs {
+		if ID == admin {
+			return true
+		}
+	}
+	return false
+}
+
+
+
+
+
+
+
+
+
+
+
