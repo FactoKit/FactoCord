@@ -4,7 +4,7 @@ import (
 	"io"
 	"time"
 
-	"github.com/FactoKit/FactoCord/support"
+	"../../support"
 	"github.com/bwmarrin/discordgo"
 )
 
