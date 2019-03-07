@@ -3,9 +3,9 @@ package commands
 import (
 	"strings"
 
-	"github.com/FactoKit/FactoCord/commands/admin"
-	"github.com/FactoKit/FactoCord/commands/utils"
-	"github.com/FactoKit/FactoCord/support"
+	"../commands/admin"
+        "../commands/utils"
+        "../support"
 	"github.com/bwmarrin/discordgo"
 )
 
