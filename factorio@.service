@@ -1,0 +1,19 @@
+[Unit]
+Description=Factorio server %i
+Requires=network-online.target
+
+[Service]
+WorkingDirectory=/opt/factorio%i/FactoCord/
+User=factorio%i
+Type=forking
+
+ExecStart=/usr/bin/tmux new-session -s factorio%i -d '/opt/factorio%i/FactoCord/FactoCord'
+
+ExecStop=/usr/bin/tmux send-keys -t factorio%i 'Server shutdown in 10 seconds! Please save map!' Enter
+ExecStop=/bin/sleep 10
+ExecStop=/usr/bin/tmux send-keys -t factorio%i '/quit' Enter
+ExecStop=/bin/sleep 10
+ExecStop=/usr/bin/tmux kill-session -t factorio%i
+
+[Install]
+WantedBy=multi-user.target
