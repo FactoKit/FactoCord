@@ -2,7 +2,7 @@
 <p align="center">FactoCord -- a Factorio to Discord bridge bot for Linux</p>
 <p align="center">
 <a href="https://goreportcard.com/report/github.com/Kuhave/FactoCord"><img src="https://goreportcard.com/badge/github.com/Kuhave/FactoCord" alt="Go Report Card"></a>
-<a href="https://travis-ci.org/FactoKit/FactoCord"><img src="https://travis-ci.org/Kuhave/FactoCord.svg?branch=master"</img></a>
+<a href="https://travis-ci.org/Kuhave/FactoCord"><img src="https://travis-ci.org/Kuhave/FactoCord.svg?branch=master"</img></a>
 </p>
 
 # Running
