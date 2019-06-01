@@ -1,12 +1,12 @@
 <p align="center"><img src="http://i.imgur.com/QrhAeBe.png"></p>
 <p align="center">FactoCord -- a Factorio to Discord bridge bot for Linux</p>
 <p align="center">
-<a href="https://goreportcard.com/report/github.com/FactoKit/FactoCord"><img src="https://goreportcard.com/badge/github.com/FactoKit/FactoCord" alt="Go Report Card"></a>
-<a href="https://travis-ci.org/FactoKit/FactoCord"><img src="https://travis-ci.org/FactoKit/FactoCord.svg?branch=master"</img></a>
+<a href="https://goreportcard.com/report/github.com/Kuhave/FactoCord"><img src="https://goreportcard.com/badge/github.com/Kuhave/FactoCord" alt="Go Report Card"></a>
+<a href="https://travis-ci.org/FactoKit/FactoCord"><img src="https://travis-ci.org/Kuhave/FactoCord.svg?branch=master"</img></a>
 </p>
 
 # Running
-*Make sure you have your .env file in the same directory as the executable/binary, you can use .envexample the template*
+*Make sure you have your `.env` file in the same directory as the executable/binary, you can use `.envexample` the template*
 
 There are two ways of starting FactoCord
 
@@ -72,3 +72,4 @@ If a way is found to fix this problem, then Windows support will be added.
 
   - Brett and MajesticFudgie for making the logo!
   - [UclCommander](https://github.com/UclCommander) for finding me the tails library which made this a lot easier to build.
+  - [FactoCord](https://github.com/FactoKit/FactoCord) Original repo of FactoCord
