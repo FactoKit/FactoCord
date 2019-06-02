@@ -27,12 +27,10 @@ func onlineListEmbed() *discordgo.MessageEmbed {
 		if *UserListResult == 3 {
 			usercount = (**UserList).Len()
 			*UserListResult = 0
-			fmt.Println("여러명")
 			break
 		} else if *UserListResult == 4 {
 			usercount = 0
 			*UserListResult = 0
-			fmt.Println("0명")
 			break
 		}
 	}
@@ -49,8 +47,6 @@ func onlineListEmbed() *discordgo.MessageEmbed {
 			var value string
 
 			value = user.Value.(string)
-
-			fmt.Println("리스트 : ", user.Value.(string))
 
 			fields = append(fields, &discordgo.MessageEmbedField{
 				Name:  value,
