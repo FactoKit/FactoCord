@@ -37,6 +37,8 @@ func RegisterCommands() {
 	// Util Commands
 	CL.CommandList = append(CL.CommandList, Command{Name: "Mods", Command: utils.ModsList,
 		Admin: false})
+	CL.CommandList = append(CL.CommandList, Command{Name: "Online", Command: utils.OnlineList,
+		Admin: false})
 }
 
 // RunCommand runs a specified command.

@@ -15,6 +15,7 @@ import (
 
 	"./commands"
 	"./commands/admin"
+	"./commands/utils"
 	"./support"
 	"github.com/bwmarrin/discordgo"
 	_ "github.com/joho/godotenv/autoload"
@@ -33,6 +34,9 @@ func main() {
 	support.Config.LoadEnv()
 	Running = false
 	admin.R = &Running
+	admin.SaveResult = &support.SaveResult
+	utils.UserList = &support.OnlineUserList
+	utils.UserListResult = &support.UserListResult
 
 	// Do not exit the app on this error.
 	if err := os.Remove("factorio.log"); err != nil {
@@ -110,6 +114,7 @@ func discord() {
 	discordToken := support.Config.DiscordToken
 	commands.RegisterCommands()
 	admin.P = &Pipe
+	utils.P = &Pipe
 	fmt.Println("Starting bot..")
 	bot, err := discordgo.New("Bot " + discordToken)
 	Session = bot
